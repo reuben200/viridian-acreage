@@ -1,0 +1,61 @@
+viridian-acreage/
+│
+├── public/                     # Static assets served as-is
+│   ├── favicon.ico
+│   ├── logo192.png
+│   ├── logo512.png
+│   ├── manifest.json           # PWA manifest
+│   ├── robots.txt
+│   └── images/                 # Public product images (optional)
+│
+├── src/
+│   ├── assets/                 # Local images, icons, fonts
+│   │   └── icons/
+│   │
+│   ├── components/             # Reusable UI components
+│   │   ├── Navbar.jsx
+│   │   ├── Footer.jsx
+│   │   ├── ProductCard.jsx
+│   │   ├── ProductGrid.jsx
+│   │   ├── HeroBanner.jsx
+│   │   └── FormInput.jsx
+│   │
+│   ├── layouts/                # Page layouts (shared structure)
+│   │   └── MainLayout.jsx
+│   │
+│   ├── pages/                  # Main pages (routes)
+│   │   ├── Home.jsx
+│   │   ├── About.jsx
+│   │   ├── Products.jsx
+│   │   ├── ProductDetail.jsx
+│   │   ├── HowItWorks.jsx
+│   │   ├── Contact.jsx
+│   │   └── Admin.jsx
+│   │
+│   ├── services/               # Firebase & API logic
+│   │   ├── firebase.js         # Firebase config/init
+│   │   ├── productService.js   # Firestore queries (CRUD for products)
+│   │   ├── inquiryService.js   # Save inquiries, trigger emails
+│   │   └── authService.js      # Admin auth (future use)
+│   │
+│   ├── context/                # React Context (state management)
+│   │   └── ProductContext.jsx
+│   │
+│   ├── hooks/                  # Custom React hooks
+│   │   └── useProducts.js
+│   │   └── useInquiries.js
+│   │
+│   ├── styles/                 # Global styles (if using Tailwind, keep minimal)
+│   │   └── globals.css
+│   │
+│   ├── App.jsx                 # Main app component
+│   ├── main.jsx                # Vite entry point
+│   └── routes.jsx              # React Router configuration
+│
+├── .env                        # Firebase keys, API secrets
+├── .gitignore
+├── index.html
+├── package.json
+├── tailwind.config.js          # Tailwind config
+├── vite.config.js              # Vite config
+└── README.md
