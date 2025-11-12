@@ -1,51 +1,37 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { auth, db } from "../services/firebaseConfig";
-import { onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
+// src/components/ProtectedRoute.jsx
+import { useEffect } from "react";
+import { Navigate, useLocation } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const ProtectedRoute = ({ children, allowedRoles = [] }) => {
-    const [loading, setLoading] = useState(true);
-    const [authorized, setAuthorized] = useState(false);
-    const navigate = useNavigate();
+  const { user, role, loading } = useAuth();
+  const location = useLocation();
 
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            if (!user) {
-                navigate("/login", { replace: true });
-                return;
-            }
+  // 🔹 While still checking user state
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen text-gray-600">
+        Checking permissions...
+      </div>
+    );
+  }
 
-            try {
-                const userRef = doc(db, "customers", user.uid);
-                const userSnap = await getDoc(userRef);
-                const role = userSnap.exists() ? userSnap.data().role : "customer";
+  // 🔹 If no user → redirect to login
+  if (!user) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
 
-                if (allowedRoles.includes(role)) {
-                    setAuthorized(true);
-                } else {
-                    // redirect unauthorized users safely
-                    navigate(role === "customer" ? "/dashboard" : "/", { replace: true });
-                }
-            } catch (error) {
-                console.error("Error fetching user role:", error);
-                navigate("/login", { replace: true });
-            } finally {
-                setLoading(false);
-            }
-        });
+  // 🔹 If user exists but role not allowed
+  if (allowedRoles.length > 0 && !allowedRoles.includes(role)) {
+    // this redirect safely to user’s default dashboard
+    if (role === "admin" || role === "super_admin")
+      return <Navigate to="/admin" replace />;
+    if (role === "manager") return <Navigate to="/manager" replace />;
+    return <Navigate to="/dashboard" replace />;
+  }
 
-        return () => unsubscribe();
-    }, [allowedRoles, navigate]);
-
-    if (loading)
-        return (
-            <div className="flex items-center justify-center min-h-screen text-gray-600">
-                Checking permissions...
-            </div>
-        );
-
-    return authorized ? children : null;
+  // ✅ Authorized
+  return children;
 };
 
 export default ProtectedRoute;

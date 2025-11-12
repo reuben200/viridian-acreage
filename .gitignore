@@ -1,0 +1,8 @@
+.env
+.rnv.local
+node_modules/
+dist/
+build/
+
+package-lock.json
+yarn.lock
