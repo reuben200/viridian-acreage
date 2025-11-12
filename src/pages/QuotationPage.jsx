@@ -1,4 +1,3 @@
-// src/pages/QuotationPage.jsx
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle, Send } from "lucide-react";
