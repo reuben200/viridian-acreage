@@ -1,0 +1,275 @@
+[
+  {
+    "id": "ginger",
+    "name": "Fresh Ginger",
+    "brand": "",
+    "description": "Farm-fresh ginger, cleaned, bulk-packaged in 25kg & 50kg sacks.",
+    "images": [
+      "https://harmonychiro.com/wp-content/uploads/2024/09/ginger-root-2.jpg",
+      "https://cdn.pixabay.com/photo/2023/03/30/21/06/ginger-7888804_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/31/14/24/ginger-6757584_640.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/31/14/25/ginger-6757588_640.jpg"
+    ],
+    "availability": "Year-round",
+    "minOrder": "25kg",
+    "category": "Spices",
+    "oldPrice": 75000,
+    "currentPrice": 50000,
+    "reviews": 4.5,
+    "sku": "",
+    "tags": ["fresh", "natural", "organic"],
+    "stockStatus": "In stock"
+  },
+  {
+    "id": "sesame",
+    "name": "Sesame Seeds",
+    "brand": "",
+    "description": "Export-quality sesame seeds, sorted and packaged in 50kg bags.",
+    "images": [
+      "https://media.premiumtimesng.com/wp-content/files/2021/03/sesame.jpg",
+      "https://cdn.pixabay.com/photo/2021/10/08/01/30/sesame-seeds-6690011_640.jpg",
+      "https://cdn.pixabay.com/photo/2019/02/04/02/31/sesame-3973850_640.jpg",
+      "https://cdn.pixabay.com/photo/2018/04/10/09/57/cooking-3306905_640.jpg"
+    ],
+    "availability": "November – April",
+    "minOrder": "50kg",
+    "category": "Seeds",
+    "oldPrice": 120000,
+    "currentPrice": 100000,
+    "reviews": 5,
+    "sku": "",
+    "tags": ["fresh", "natural", "organic"],
+    "stockStatus": "In stock"
+  },
+  {
+    "id": "maize",
+    "name": "Maize (Corn)",
+    "brand": "",
+    "description": "High-quality maize dried and packaged in 100kg bags.",
+    "images": [
+      "https://cdn.britannica.com/36/167236-050-BF90337E/Ears-corn.jpg",
+      "https://cdn.pixabay.com/photo/2014/02/12/07/37/corn-264520_640.jpg",
+      "https://cdn.pixabay.com/photo/2014/10/24/15/59/corn-501441_640.jpg",
+      "https://cdn.pixabay.com/photo/2014/02/23/13/14/maize-272896_640.jpg"
+    ],
+    "availability": "Seasonal",
+    "minOrder": "100kg",
+    "category": "Grains",
+    "oldPrice": 180000,
+    "currentPrice": 100000,
+    "reviews": 3.9,
+    "sku": "",
+    "tags": ["fresh", "natural", "organic"],
+    "stockStatus": "In stock"
+  },
+  {
+    "id": "yam",
+    "name": "Yam Tubers",
+    "brand": "",
+    "description": "Fresh yam tubers, bulk orders only.",
+    "images": [
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYz6SPvJ3xjwmMlkcNUJCGSC6jRy0lzio8fw&s",
+      "https://africandelightstore.com/cdn/shop/articles/VS2_3335_1024x.jpg",
+      "https://www.iyalojadirect.com/wp-content/uploads/2021/02/yam.jpg",
+      "https://cdn.punchng.com/wp-content/uploads/2018/09/26054809/tubers-of-yam.jpg"
+    ],
+    "availability": "August – February",
+    "minOrder": "50 tubers",
+    "category": "Tubers",
+    "oldPrice": 180000,
+    "currentPrice": 55000,
+    "reviews": 5,
+    "sku": "",
+    "tags": ["fresh", "natural", "organic"],
+    "stockStatus": "In stock"
+  },
+  {
+    "id": "cocoyam",
+    "name": "Cocoyam Tubers",
+    "brand": "",
+    "description": "Fresh cocoyam tubers, bulk orders only.",
+    "images": [
+      "https://learn.nobowa.com/wp-content/uploads/2017/05/cocoyam1-1.jpg",
+      "https://i0.wp.com/www.1qfoodplatter.com/wp-content/uploads/2015/11/red-cocoyam.jpg",
+      "https://sustaine.org/wp-content/uploads/2023/05/7xm.xyz294592.jpg",
+      "https://airahsolutionsltd.com/wp-content/uploads/2022/03/Cocoyam-fufu-1.jpg"
+    ],
+    "availability": "August – February",
+    "minOrder": "5 baskets",
+    "category": "Tubers",
+    "oldPrice": 85000,
+    "currentPrice": 50000,
+    "reviews": 4,
+    "sku": "",
+    "tags": ["fresh", "natural", "organic"],
+    "stockStatus": "In stock"
+  },
+  {
+    "id": "garri",
+    "name": "Garri Ijebu",
+    "brand": "",
+    "description": "Fresh neatly fried Ijebu garri, bulk orders only.",
+    "images": [
+      "https://adakufoods.com/store/img/anblog/b/b-638b62261eaeb-anblog_thumb.jpeg"
+    ],
+    "availability": "August – February",
+    "minOrder": "50kg",
+    "category": "Grains",
+    "oldPrice": 60000,
+    "currentPrice": 43000,
+    "reviews": 4,
+    "sku": "",
+    "tags": ["fresh", "natural", "organic", "clean"],
+    "stockStatus": "In stock"
+  },
+  {
+    "id": "cassava",
+    "name": "Cassava Tubers",
+    "brand": "",
+    "description": "Fresh cassava tubers, bulk orders only.",
+    "images": [
+      "https://previews.123rf.com/images/appstock/appstock1803/appstock180300150/100687494-big-cassava-root-in-farm.jpg"
+    ],
+    "availability": "August – February",
+    "minOrder": "200kg",
+    "category": "Tubers",
+    "oldPrice": 180000,
+    "currentPrice": 100000,
+    "reviews": 4,
+    "sku": "",
+    "tags": ["fresh", "natural", "organic", "cassava", "garri"],
+    "stockStatus": "Out of stock"
+  },
+  {
+    "id": "palm-oil",
+    "name": "Palm Oil",
+    "brand": "",
+    "description": "Freshly prepared palm oil, bulk orders only.",
+    "images": [
+      "https://www.researchgate.net/publication/325216596/figure/fig1/AS:627528796479488@1526625932194/Left-crude-palm-oil-being-poured-from-the-glass-bottle-notice-its-bright-orange-red.png",
+      "https://cdn.pixabay.com/photo/2014/03/15/17/03/oil-palm-287902_640.jpg",
+      "https://cdn.pixabay.com/photo/2014/03/15/16/59/oil-palm-287899_640.jpg",
+      "https://cdn.pixabay.com/photo/2016/06/18/08/43/palm-1464654_640.jpg"
+    ],
+    "availability": "August – February",
+    "minOrder": "25 litres",
+    "category": "Oil",
+    "oldPrice": 80000,
+    "currentPrice": 60000,
+    "reviews": 5,
+    "sku": "",
+    "tags": ["fresh", "natural", "organic", "oil"],
+    "stockStatus": "In stock"
+  },
+  {
+    "id": "vegetable-oil",
+    "name": "Vegetable Oil",
+    "brand": "",
+    "description": "Refined vegetable oil, bulk and retail orders available.",
+    "images": [
+      "https://cdn.pixabay.com/photo/2017/01/24/16/36/broccoli-2005820_640.jpg",
+      "https://cdn.pixabay.com/photo/2018/07/02/13/48/garlic-3511585_640.jpg",
+      "https://cdn.pixabay.com/photo/2020/02/17/09/07/still-life-4855955_640.jpg",
+      "https://cdn.pixabay.com/photo/2016/07/13/16/19/creamy-pasta-1514893_640.jpg"
+    ],
+    "availability": "All year round",
+    "minOrder": "25 litres",
+    "category": "Oil",
+    "oldPrice": 85000,
+    "currentPrice": 72000,
+    "reviews": 5,
+    "sku": "",
+    "tags": ["fresh", "natural", "organic", "oil"],
+    "stockStatus": "In stock"
+  },
+  {
+    "id": "brown-beans",
+    "name": "Brown Beans",
+    "brand": "",
+    "description": "Cleaned Nigerian brown beans, packaged in 100kg sacks.",
+    "images": [
+      "https://cdn.pixabay.com/photo/2016/10/21/15/01/beans-1753561_640.jpg"
+    ],
+    "availability": "Year-round",
+    "minOrder": "100kg",
+    "category": "Legumes",
+    "oldPrice": 95000,
+    "currentPrice": 80000,
+    "reviews": 4.3,
+    "sku": "",
+    "tags": ["fresh", "natural", "beans"],
+    "stockStatus": "In stock"
+  },
+  {
+    "id": "local-rice",
+    "name": "Local Ofada Rice",
+    "brand": "",
+    "description": "Premium local Ofada rice, stone-free and well-polished.",
+    "images": [
+      "https://cdn.pixabay.com/photo/2017/08/11/10/29/rice-2631845_640.jpg"
+    ],
+    "availability": "Year-round",
+    "minOrder": "50kg",
+    "category": "Grains",
+    "oldPrice": 110000,
+    "currentPrice": 95000,
+    "reviews": 4.6,
+    "sku": "",
+    "tags": ["organic", "local", "grains"],
+    "stockStatus": "In stock"
+  },
+  {
+    "id": "plantain-flour",
+    "name": "Plantain Flour",
+    "brand": "",
+    "description": "Rich plantain flour for swallow, packaged in 25kg bags.",
+    "images": [
+      "https://cdn.pixabay.com/photo/2020/10/29/07/35/plantain-5695119_640.jpg"
+    ],
+    "availability": "All year round",
+    "minOrder": "25kg",
+    "category": "Flour",
+    "oldPrice": 70000,
+    "currentPrice": 50000,
+    "reviews": 4.8,
+    "sku": "",
+    "tags": ["natural", "healthy", "flour"],
+    "stockStatus": "In stock"
+  },
+  {
+    "id": "yam-flour",
+    "name": "Yam Flour (Elubo)",
+    "brand": "",
+    "description": "Premium dried yam flour, smooth texture, 25kg bag.",
+    "images": [
+      "https://cdn.pixabay.com/photo/2017/03/14/12/47/powder-2145341_640.jpg"
+    ],
+    "availability": "All year round",
+    "minOrder": "25kg",
+    "category": "Flour",
+    "oldPrice": 85000,
+    "currentPrice": 60000,
+    "reviews": 4.7,
+    "sku": "",
+    "tags": ["yam", "flour", "healthy"],
+    "stockStatus": "In stock"
+  },
+  {
+    "id": "honey",
+    "name": "Pure Natural Honey",
+    "brand": "",
+    "description": "Raw, unadulterated honey sourced from Nigerian apiaries.",
+    "images": [
+      "https://cdn.pixabay.com/photo/2017/03/27/13/32/honey-2178306_640.jpg"
+    ],
+    "availability": "Year-round",
+    "minOrder": "20 litres",
+    "category": "Sweeteners",
+    "oldPrice": 65000,
+    "currentPrice": 50000,
+    "reviews": 5,
+    "sku": "",
+    "tags": ["organic", "natural", "sweetener"],
+    "stockStatus": "In stock"
+  }
+]

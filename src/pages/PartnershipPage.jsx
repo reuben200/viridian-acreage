@@ -290,8 +290,9 @@ const PartnershipPage = () => {
               <X className="w-5 h-5" />
             </button>
 
-            <h2 className="text-2xl font-bold mb-4 text-green-700 dark:text-green-300">
-              Partnership Inquiry – {selectedTier}
+            <h2 className="text-2xl font-bold mb-4 text-gray-600 dark:text-gray-300 flex items-center gap-2 flex-row">
+              Partnership Inquiry –{" "}
+              <p className="text-green-500">{selectedTier}</p>
             </h2>
 
             <form onSubmit={handleSubmit} className="space-y-6">

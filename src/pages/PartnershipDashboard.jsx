@@ -1,54 +1,89 @@
 import { useEffect, useState } from "react";
 import {
   collection,
+  query,
+  orderBy,
+  limit,
+  startAfter,
   getDocs,
+  where,
   updateDoc,
   doc,
   deleteDoc,
 } from "firebase/firestore";
 import { db } from "../services/firebaseConfig";
 import { useAuth } from "../context/AuthContext";
-import usePartnerships from "../hooks/usePartnerships";
-import { Loader2, CheckCircle, XCircle, Trash2, Clock } from "lucide-react";
+import { Loader2, CheckCircle, XCircle, Trash2, Search } from "lucide-react";
 import { motion } from "framer-motion";
 
 const PartnerDashboard = () => {
   const { role } = useAuth();
   const [partnerships, setPartnerships] = useState([]);
+  const [lastDoc, setLastDoc] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState("All");
   const [updating, setUpdating] = useState(null);
   const [error, setError] = useState("");
+  const [filter, setFilter] = useState("All");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [hasMore, setHasMore] = useState(true);
 
-  // Fetch partnerships
-  useEffect(() => {
-    const fetchPartnerships = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, "partnerships"));
-        const data = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setPartnerships(
-          data.sort((a, b) => b.createdAt?.seconds - a.createdAt?.seconds)
+  const pageSize = 10;
+
+  // Fetch partnerships (with search, filter, and pagination)
+  const fetchPartnerships = async (reset = true) => {
+    setLoading(true);
+    try {
+      let q = query(
+        collection(db, "partnerships"),
+        orderBy("createdAt", "desc"),
+        limit(pageSize)
+      );
+
+      // Apply filter
+      if (filter !== "All") {
+        q = query(
+          collection(db, "partnerships"),
+          where("status", "==", filter),
+          orderBy("createdAt", "desc"),
+          limit(pageSize)
         );
-      } catch (err) {
-        console.error("Error fetching partnerships:", err);
-        setError("Failed to load partnership inquiries.");
-      } finally {
-        setLoading(false);
       }
-    };
-    fetchPartnerships();
-  }, []);
 
-  // Filter logic
-  const filteredPartnerships =
-    filter === "All"
-      ? partnerships
-      : partnerships.filter((p) => p.status === filter);
+      // Apply search (Firestore only allows one "where" per field)
+      if (searchTerm.trim()) {
+        q = query(
+          collection(db, "partnerships"),
+          where("businessName", ">=", searchTerm),
+          where("businessName", "<=", searchTerm + "\uf8ff"),
+          orderBy("businessName"),
+          limit(pageSize)
+        );
+      }
 
-  // Update status
+      if (!reset && lastDoc) {
+        q = query(q, startAfter(lastDoc));
+      }
+
+      const snap = await getDocs(q);
+      const docs = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+
+      setPartnerships((prev) => (reset ? docs : [...prev, ...docs]));
+      setLastDoc(snap.docs[snap.docs.length - 1]);
+      setHasMore(snap.docs.length === pageSize);
+    } catch (err) {
+      console.error("Error fetching partnerships:", err);
+      setError("Failed to load partnership inquiries.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Initial + search/filter trigger
+  useEffect(() => {
+    fetchPartnerships(true);
+  }, [filter, searchTerm]);
+
+  // Status update
   const handleStatusUpdate = async (id, newStatus) => {
     setUpdating(id);
     try {
@@ -64,7 +99,7 @@ const PartnerDashboard = () => {
     }
   };
 
-  // Delete record (Admin only)
+  // Delete record
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this record?")) return;
     setUpdating(id);
@@ -79,14 +114,7 @@ const PartnerDashboard = () => {
     }
   };
 
-  if (loading)
-    return (
-      <div className="flex items-center justify-center min-h-screen text-gray-600 dark:text-gray-300">
-        <Loader2 className="w-6 h-6 animate-spin mr-2" /> Loading partnership
-        inquiries...
-      </div>
-    );
-
+  // Filter + Search + Pagination UI
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6">
       <div className="max-w-7xl mx-auto">
@@ -100,21 +128,36 @@ const PartnerDashboard = () => {
           </div>
         )}
 
-        {/* Filter Buttons */}
-        <div className="flex flex-wrap gap-3 mb-6">
-          {["All", "Pending", "Approved", "Rejected"].map((status) => (
-            <button
-              key={status}
-              onClick={() => setFilter(status)}
-              className={`px-4 py-2 rounded-full font-medium text-sm ${
-                filter === status
-                  ? "bg-green-600 text-white"
-                  : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600"
-              }`}
-            >
-              {status}
-            </button>
-          ))}
+        {/* Top Controls */}
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
+          {/* Filters */}
+          <div className="flex flex-wrap gap-3">
+            {["All", "Pending", "Approved", "Rejected"].map((status) => (
+              <button
+                key={status}
+                onClick={() => setFilter(status)}
+                className={`px-4 py-2 rounded-full font-medium text-sm ${
+                  filter === status
+                    ? "bg-green-600 text-white"
+                    : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600"
+                }`}
+              >
+                {status}
+              </button>
+            ))}
+          </div>
+
+          {/* Search Box */}
+          <div className="relative w-full md:w-1/3">
+            <Search className="absolute left-3 top-3 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Search business name..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 rounded-lg border dark:bg-gray-800 dark:text-white focus:ring-2 focus:ring-green-500"
+            />
+          </div>
         </div>
 
         {/* Table */}
@@ -131,17 +174,27 @@ const PartnerDashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredPartnerships.length === 0 ? (
+              {loading && partnerships.length === 0 ? (
                 <tr>
                   <td
                     colSpan="6"
                     className="text-center py-8 text-gray-500 dark:text-gray-400"
                   >
-                    No partnership inquiries found.
+                    <Loader2 className="w-6 h-6 animate-spin mx-auto" />
+                    <p>Loading partnerships...</p>
+                  </td>
+                </tr>
+              ) : partnerships.length === 0 ? (
+                <tr>
+                  <td
+                    colSpan="6"
+                    className="text-center py-8 text-gray-500 dark:text-gray-400"
+                  >
+                    No partnerships found.
                   </td>
                 </tr>
               ) : (
-                filteredPartnerships.map((p, i) => (
+                partnerships.map((p, i) => (
                   <motion.tr
                     key={p.id}
                     initial={{ opacity: 0, y: 10 }}
@@ -160,7 +213,7 @@ const PartnerDashboard = () => {
                       </div>
                     </td>
                     <td className="px-6 py-4 text-green-600 dark:text-green-400 font-semibold">
-                      {p.tier}
+                      {p.tier || "—"}
                     </td>
                     <td className="px-6 py-4">
                       <span
@@ -172,7 +225,7 @@ const PartnerDashboard = () => {
                             : "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300"
                         }`}
                       >
-                        {p.status}
+                        {p.status || "Pending"}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-gray-500 dark:text-gray-400 text-sm">
@@ -218,6 +271,18 @@ const PartnerDashboard = () => {
               )}
             </tbody>
           </table>
+        </div>
+
+        {/* Pagination */}
+        <div className="flex justify-center mt-8">
+          {hasMore && !loading && (
+            <button
+              onClick={() => fetchPartnerships(false)}
+              className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium shadow"
+            >
+              Load More
+            </button>
+          )}
         </div>
       </div>
     </div>

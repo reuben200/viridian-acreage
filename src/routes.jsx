@@ -5,13 +5,14 @@ import ProtectedRoute from "./components/ProtectedRoute";
 // Public pages
 import {
   Home,
-  About,
+  // About,
   Contact,
   Products,
   ProductDetail,
   PartnershipPage,
   QuotationPage,
   PageNotFound,
+  HowItWorks,
 } from "./pages";
 
 // Auth pages
@@ -45,14 +46,14 @@ const AppRoutes = () => {
       {/* PUBLIC ROUTES */}
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<ProductDetail />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/partnership" element={<PartnershipPage />} />
         <Route path="/quotation" element={<QuotationPage />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/join" element={<Signup />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
       </Route>
 
@@ -87,6 +88,15 @@ const AppRoutes = () => {
         <Route path="customers" element={<Customers />} />
         <Route path="orders" element={<Orders />} />
         <Route path="inventory" element={<Inventory />} />
+        <Route
+          path="products"
+          element={<p>Products management page for Manager</p>}
+        />
+        <Route
+          path="reports"
+          element={<p>Reports management page for Manager</p>}
+        />
+        <Route path="settings" element={<p>Settings page for Manager</p>} />
         <Route path="partnership" element={<PartnerDashboard />} />
       </Route>
 
@@ -102,6 +112,7 @@ const AppRoutes = () => {
         <Route index element={<CustomerDashboard />} />
         <Route path="orders" element={<div>My Orders</div>} />
         <Route path="profile" element={<div>Profile Settings</div>} />
+        <Route path="settings" element={<p>Settings page for Manager</p>} />
       </Route>
 
       {/* 404 */}
