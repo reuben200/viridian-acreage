@@ -1,0 +1,116 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ======================================================
+    // 🚨 ADMIN GLOBAL OVERRIDE
+    // Admin can read/write EVERYTHING in the entire database
+    // This MUST come BEFORE all other match blocks.
+    // ======================================================
+    match /{path=**} {
+      allow read, write: if isAdmin();
+    }
+
+    // ======================================================
+    // 👤 USERS
+    // ======================================================
+    match /users/{userId} {
+
+      // User creates own profile after authentication
+      allow create: if request.auth != null && request.auth.uid == userId;
+
+      // User reads ONLY their own user data
+      allow get: if request.auth != null && request.auth.uid == userId;
+
+      // User updates own profile EXCEPT restricted fields
+      allow update: if request.auth != null &&
+                    request.auth.uid == userId &&
+                    !("role" in request.resource.data) &&
+                    !("status" in request.resource.data);
+    }
+
+    // ======================================================
+    // 🛍 VENDORS
+    // ======================================================
+    match /vendors/{vendorId} {
+
+      // Vendor creates own vendor profile
+      allow create: if request.auth != null && request.auth.uid == vendorId;
+
+      // Vendor reads their own vendor profile
+      allow get: if request.auth != null && request.auth.uid == vendorId;
+
+      // Vendor updates own data except restricted fields
+      allow update: if request.auth != null &&
+                     request.auth.uid == vendorId &&
+                     !("status" in request.resource.data) &&
+                     !("role" in request.resource.data);
+    }
+
+    // ======================================================
+    // 📦 PRODUCTS
+    // ======================================================
+    match /products/{productId} {
+
+      // Any signed-in user can read products
+      allow get, list: if isSignedIn();
+
+      // Approved partners can create products
+      allow create: if isApprovedPartner();
+
+      // Partners update/delete only their own products
+      allow update, delete: if request.auth != null &&
+                             isApprovedPartner() &&
+                             request.auth.uid == resource.data.ownerId;
+    }
+
+    // ======================================================
+    // 🧾 ORDERS
+    // ======================================================
+    match /orders/{orderId} {
+
+      // Buyer creates an order
+      allow create: if isSignedIn() &&
+                    request.resource.data.buyerId == request.auth.uid;
+
+      // Buyer or Seller can read their order
+      allow get: if request.auth != null &&
+                 (request.auth.uid == resource.data.buyerId ||
+                  request.auth.uid == resource.data.sellerId);
+    }
+
+    // ======================================================
+    // 💰 VENDOR EARNINGS
+    // ======================================================
+    match /vendor_earnings/{vendorId} {
+
+      // Vendor sees their own earnings only
+      allow get: if request.auth != null && request.auth.uid == vendorId;
+    }
+
+    // ======================================================
+    // ❌ DEFAULT DENY
+    // ======================================================
+    match /{path=**} {
+      allow read, write: if false;
+    }
+  }
+
+  // ======================================================
+  // 🔧 HELPERS
+  // ======================================================
+  function isSignedIn() {
+    return request.auth != null;
+  }
+
+  function isAdmin() {
+    let user = get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    return user.role == 'admin' || user.role == 'super_admin';
+  }
+
+  function isApprovedPartner() {
+    let user = get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    return user.role == 'partner' && user.status == 'approved';
+  }
+}
